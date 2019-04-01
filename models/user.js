@@ -7,8 +7,10 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING
   }, {
     hooks: {
-      afterValidate: function (user, options) {
-        user.password = bcrypt.hashSync(user.password, 10)
+      beforeSave: function (user, options) {
+        if (Object.keys(user._changed).includes('password') || user.isNewRecord) {
+          user.password = bcrypt.hashSync(user.password, 10)
+        }
       }
     }
   });

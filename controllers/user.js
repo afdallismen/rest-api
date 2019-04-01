@@ -32,7 +32,7 @@ class User {
         username: req.body.username,
         password: req.body.password
       }))
-      .then(res.status(204).json)
+      .then(_ => res.status(204).json())
       .catch(next)
   }
 
@@ -43,7 +43,7 @@ class User {
         username: req.body.username,
         password: req.body.password
       }, { fields: Object.keys(req.body) }))
-      .then(res.status(204).json)
+      .then(_ => res.status(204).json())
       .catch(next)
   }
 
@@ -51,7 +51,7 @@ class User {
     UserModel
       .findByPk(req.params.id)
       .then(user => user.destroy())
-      .then(res.status(204).json)
+      .then(_ => res.status(204).json())
       .catch(next)
   }
 }
