@@ -1,11 +1,12 @@
 const routes = require('express').Router()
 const { User } = require('../controllers')
+const { auth } = require('../middlewares')
 
-routes.get('/', User.list)
+routes.get('/', auth.adminOnly, User.list)
 routes.get('/:id', User.get)
-routes.post('/', User.create)
-routes.put('/:id', User.put)
-routes.patch('/:id', User.patch)
-routes.delete('/:id', User.remove)
+routes.post('/', auth.adminOnly, User.create)
+routes.put('/:id', auth.adminAndSelf, User.put)
+routes.patch('/:id', auth.adminAndSelf, User.patch)
+routes.delete('/:id', auth.adminOnly, User.remove)
 
 module.exports = routes
