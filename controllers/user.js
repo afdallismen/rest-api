@@ -19,7 +19,7 @@ class User {
 
           res.status(200).json({ token })
         } else {
-          res.status(402).json({ message: 'Username/password is wrong' })
+          res.status(401).json({ message: 'Username/password is wrong' })
         }
       })
       .catch(next)
@@ -40,11 +40,12 @@ class User {
   }
 
   static create (req, res, next) {
+    let role = !req.user ? 'basic' : req.body.role 
     UserModel
       .create({
         username: req.body.username,
         password: req.body.password,
-        role: !req.user ? 'basic' : req.body.role
+        role
       })
       .then(created => res.status(201).json(created))
       .catch(next)
